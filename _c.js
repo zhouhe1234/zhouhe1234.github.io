@@ -1,0 +1,1 @@
+window.addEventListener("error",function(e){try{var k="err:"+location.pathname;var l=JSON.parse(localStorage.getItem(k)||"[]");l.unshift({t:new Date().toISOString().slice(0,19),m:String(e.message).slice(0,200)});localStorage.setItem(k,JSON.stringify(l.slice(0,10)));}catch(x){}});

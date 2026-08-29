@@ -5,11 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>新媒体小工具合集 · 周何</title>
 <meta name="description" content="字数统计、二维码生成、配色摇号、文本清理、随机选题——新媒体人每天顺手要用的小工具。">
+<meta property="og:title" content="新媒体小工具合集 · 周何">
+<meta property="og:description" content="字数统计、二维码生成、配色摇号、文本清理、随机选题——新媒体人每天顺手要用的小工具。">
+<meta property="og:image" content="../assets/favicon.png">
+<link rel="manifest" href="../manifest.json">
+<link rel="icon" type="image/png" href="../assets/favicon.png">
 <script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs@master/qrcode.min.js"></script>
 <style>
 :root{
   --ink:#221e33; --muted:#6f6a85; --line:#e7e3f0; --bg:#fbfaff;
-  --v:#7c3aed; --v-dark:#6d28d9; --v-soft:#f3efff; --card:#fff;
+  --v:#0b83a0; --v-dark:#0a5c72; --v-soft:#e8f7fb; --card:#fff;
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 body{font-family:"Microsoft YaHei UI","Microsoft YaHei","PingFang SC",system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;-webkit-font-smoothing:antialiased}
@@ -49,7 +54,13 @@ textarea:focus,.tinput:focus{outline:none;border-color:var(--v)}
 .back-home{display:inline-block;margin-top:26px;font-size:13px;color:var(--muted)}
 .back-home:hover{color:var(--v-dark)}
 @media (max-width:520px){.stat-grid{grid-template-columns:repeat(2,1fr)}}
+/* 动效（Emil 原则） */
+@keyframes riseIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.tool.on{animation:riseIn .22s cubic-bezier(.23,1,.32,1) both}
+@media (prefers-reduced-motion: reduce){.tool.on,.form,.preview-wrap,.tool-card{animation:fadeIn .2s ease both}.tool-card{animation-delay:0s!important}}
 </style>
+<script>window.addEventListener("error",function(e){try{var k="err:"+location.pathname;var l=JSON.parse(localStorage.getItem(k)||"[]");l.unshift({t:new Date().toISOString().slice(0,19),m:String(e.message).slice(0,200)});localStorage.setItem(k,JSON.stringify(l.slice(0,10)));}catch(x){}});</script>
 </head>
 <body>
 <div class="wrap">
@@ -131,7 +142,7 @@ textarea:focus,.tinput:focus{outline:none;border-color:var(--v)}
 </div>
 
 <script>
-(function(){
+try{(function(){
   "use strict";
   const $ = s => document.querySelector(s);
   const $$ = s => [...document.querySelectorAll(s)];
@@ -257,7 +268,7 @@ textarea:focus,.tinput:focus{outline:none;border-color:var(--v)}
     lastTopic = i;
     $("#topicOut").innerHTML = '<span class="cat">'+topics[i][0]+'</span><b>'+topics[i][1]+'</b>';
   };
-})();
+})();}catch(err){document.title="⚠ 启动异常";var b=document.createElement("div");var s=b.style;s.cssText="position:fixed;left:14px;right:14px;bottom:14px;z-index:999;background:#7f1d1d;color:#fff;padding:12px 16px;border-radius:12px;font-size:13px;line-height:1.7";b.innerHTML="<b>⚠ 页面启动出错</b><br>"+(err&&err.message||"")+"<br>";var r=document.createElement("button");r.textContent="重新加载";r.style.cssText="margin:8px 8px 0 0;padding:6px 14px;border:none;border-radius:8px;font-weight:700;cursor:pointer";r.onclick=function(){location.reload()};b.appendChild(r);document.body.appendChild(b);}
 </script>
-</body>
+<script>if("serviceWorker" in navigator && location.protocol.indexOf("http")===0){navigator.serviceWorker.register((location.pathname.indexOf("/")>0?"/":"./")+"sw.js").catch(function(){});}</script></body>
 </html>

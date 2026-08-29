@@ -7,6 +7,9 @@
 <meta name="description" content="周何的个人空间：学习站、备考工具、AI 工具箱、小工具合集——全部自己写、自己部署。">
 <meta property="og:title" content="周何 · 个人空间">
 <meta property="og:description" content="网络与新媒体学生。把课堂学的东西，做成能用的东西。">
+<meta property="og:image" content="assets/favicon.png">
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" type="image/png" href="./assets/favicon.png">
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <style>
 :root{
@@ -84,6 +87,26 @@ footer{border-top:1px solid var(--line);margin-top:30px;padding:30px 0 46px}
 .f-inner{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--muted)}
 .f-inner a{color:var(--v-dark);font-weight:600}
 :focus-visible{outline:2px solid #a855f7;outline-offset:2px;border-radius:6px}
+/* 动效体系（Emil 原则）：入场 riseIn + 错峰 + 减弱动效支持 */
+@keyframes riseIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+section,.proj-card{animation:riseIn .3s cubic-bezier(.23,1,.32,1) both}
+.proj-card:nth-child(2){animation-delay:.05s}
+.proj-card:nth-child(3){animation-delay:.1s}
+.proj-card:nth-child(4){animation-delay:.15s}
+.proj-card:nth-child(5){animation-delay:.2s}
+.proj-card:nth-child(6){animation-delay:.25s}
+.hero-txt>*{animation:riseIn .35s cubic-bezier(.23,1,.32,1) both}
+.hero-txt>:nth-child(2){animation-delay:.06s}
+.hero-txt>:nth-child(3){animation-delay:.12s}
+.hero-txt>:nth-child(4){animation-delay:.18s}
+.hero-txt>:nth-child(5){animation-delay:.24s}
+.avatar{animation:fadeIn .5s ease both}
+@media (prefers-reduced-motion: reduce){
+  section,.proj-card,.hero-txt>*{animation:fadeIn .25s ease both}
+  .proj-card{animation-delay:0s!important}
+  .btn:active{transform:none}
+}
 </style>
 </head>
 <body>
@@ -117,6 +140,9 @@ footer{border-top:1px solid var(--line);margin-top:30px;padding:30px 0 46px}
         <linearGradient id="av" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7c3aed"/><stop offset="1" stop-color="#d946ef"/></linearGradient>
       </defs>
       <rect width="150" height="150" rx="36" fill="url(#av)"/>
+      <path d="M118 26 l3.5 8.5 8.5 3.5 -8.5 3.5 -3.5 8.5 -3.5 -8.5 -8.5 -3.5 8.5 -3.5 Z" fill="#fde68a" opacity=".9"/>
+      <circle cx="30" cy="118" r="4" fill="#ffffff" opacity=".5"/>
+      <path d="M46 34 c 10 -18, 30 -18, 40 0" stroke="#ffffff" stroke-width="2.5" fill="none" stroke-linecap="round" opacity=".45"/>
       <circle cx="75" cy="58" r="24" fill="#ffffff" opacity=".92"/>
       <path d="M32 132 c 8 -30, 78 -30, 86 0 l 0 18 -86 0 Z" fill="#ffffff" opacity=".92"/>
     </svg>
@@ -200,5 +226,5 @@ footer{border-top:1px solid var(--line);margin-top:30px;padding:30px 0 46px}
   </div>
 </footer>
 
-</body>
+<script>if("serviceWorker" in navigator && location.protocol.indexOf("http")===0){navigator.serviceWorker.register((location.pathname.indexOf("/")>0?"/":"./")+"sw.js").catch(function(){});}</script></body>
 </html>
