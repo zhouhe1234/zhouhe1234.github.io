@@ -107,6 +107,13 @@ section,.proj-card{animation:riseIn .3s cubic-bezier(.23,1,.32,1) both}
   .proj-card{animation-delay:0s!important}
   .btn:active{transform:none}
 }
+
+/* 最近更新 */
+.updates-box{display:flex;flex-direction:column;gap:10px}
+.upd{background:#fff;border:1px solid var(--line);border-radius:12px;padding:13px 16px}
+.upd b{font-size:14.5px}
+.upd p{font-size:12.5px;color:var(--muted);margin-top:3px}
+.upd-tag{float:right;font-size:10.5px;font-weight:800;color:var(--v-dark);background:var(--v-soft);border-radius:6px;padding:2px 8px;font-family:Consolas,monospace}
 </style>
 </head>
 <body>
@@ -196,6 +203,16 @@ section,.proj-card{animation:riseIn .3s cubic-bezier(.23,1,.32,1) both}
     </div>
   </section>
 
+  <section id="updates">
+    <div class="sec-head"><span class="sec-num">✦</span><h2>最近更新</h2><span class="rule"></span></div>
+    <div class="updates-box">
+      <div class="upd"><b>🎓 新媒学园</b><span class="upd-tag" id="v-academy">读取中…</span><p>12 门课业速通 · 9 个训练模块 · AI 批改教练 · 速记闪卡</p></div>
+      <div class="upd"><b>📗 四级冲关</b><span class="upd-tag" id="v-cet4">读取中…</span><p>423 个高频词 · 79 题 · 谚语库 · 词组库 60 组</p></div>
+      <div class="upd"><b>🤖 AI 工具箱</b><span class="upd-tag">22 个工具 · 5 类 · 提示词可复制</span><p>新增转写 / 笔记 AI / 写作校对 / 提案 / 验算类工具</p></div>
+      <div class="upd"><b>🧰 小工具 + 📄 简历</b><span class="upd-tag">可用</span><p>字数统计 / 二维码 / 配色摇号 / 简历打印</p></div>
+    </div>
+  </section>
+
   <section id="skills">
     <div class="sec-head"><span class="sec-num">02</span><h2>我在练的技能</h2><span class="rule"></span></div>
     <div class="skills">
@@ -226,5 +243,17 @@ section,.proj-card{animation:riseIn .3s cubic-bezier(.23,1,.32,1) both}
   </div>
 </footer>
 
-<script>if("serviceWorker" in navigator && location.protocol.indexOf("http")===0){navigator.serviceWorker.register((location.pathname.indexOf("/")>0?"/":"./")+"sw.js").catch(function(){});}</script></body>
+<script>if("serviceWorker" in navigator && location.protocol.indexOf("http")===0){navigator.serviceWorker.register((location.pathname.indexOf("/")>0?"/":"./")+"sw.js").catch(function(){});}</script><script>
+(function(){
+  async function grab(url, id){
+    try{
+      const t = await (await fetch(url)).text();
+      const m = t.match(/version:\s*"([^"]+)"/);
+      document.getElementById(id).textContent = m ? "内容库 " + m[1] : "已上线";
+    }catch(e){ document.getElementById(id).textContent = "已上线"; }
+  }
+  grab("newmedia-academy/js/data.js", "v-academy");
+  grab("cet4-sprint/js/data.js", "v-cet4");
+})();
+</script></body>
 </html>
