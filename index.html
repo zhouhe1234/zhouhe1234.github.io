@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>周何 · 网络与新媒体学生</title>
+<meta name="description" content="周何的个人空间：学习站、备考工具、AI 工具箱、小工具合集——全部自己写、自己部署。">
+<meta property="og:title" content="周何 · 个人空间">
+<meta property="og:description" content="网络与新媒体学生。把课堂学的东西，做成能用的东西。">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<style>
+:root{
+  --ink:#221e33; --muted:#6f6a85; --line:#e7e3f0; --bg:#fbfaff;
+  --v:#7c3aed; --v-dark:#6d28d9; --v-soft:#f3efff;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{font-family:"Microsoft YaHei UI","Microsoft YaHei","PingFang SC",system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;-webkit-font-smoothing:antialiased}
+::selection{background:rgba(168,85,247,.25)}
+a{color:var(--v-dark);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:880px;margin:0 auto;padding:0 22px}
+
+/* ---- 顶栏 ---- */
+nav{position:sticky;top:0;z-index:50;background:rgba(251,250,255,.8);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav-inner{max-width:880px;margin:0 auto;padding:14px 22px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-weight:800;font-size:16px;letter-spacing:.04em}
+.logo b{color:var(--v)}
+.nav-links{display:flex;gap:20px;font-size:13.5px;font-weight:600}
+.nav-links a{color:var(--muted)}
+.nav-links a:hover{color:var(--v-dark);text-decoration:none}
+
+/* ---- Hero ---- */
+.hero{padding:72px 0 58px;display:flex;gap:36px;align-items:center}
+.hero-txt{flex:1}
+.hello{font-family:Consolas,monospace;color:var(--v);font-size:15px;font-weight:700}
+h1{font-size:44px;line-height:1.2;letter-spacing:-.01em;margin:10px 0 14px}
+h1 .hl{color:var(--v)}
+.tagline{font-size:16.5px;color:var(--muted);max-width:520px}
+.hero-cta{margin-top:24px;display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;padding:11px 22px;border-radius:12px;font-weight:700;font-size:14.5px;border:1.5px solid transparent;cursor:pointer;transition:transform .12s cubic-bezier(.23,1,.32,1),filter .15s ease}
+.btn:active{transform:scale(.97)}
+.btn-primary{background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 4px 14px -4px rgba(124,58,237,.5)}
+.btn-primary:hover{filter:brightness(1.07);text-decoration:none}
+.btn-ghost{border-color:var(--line);color:var(--ink);background:#fff}
+.btn-ghost:hover{border-color:var(--v)}
+.avatar{width:150px;height:150px;flex-shrink:0;border-radius:36px;box-shadow:0 20px 50px -18px rgba(124,58,237,.45)}
+@media (max-width:640px){
+  .hero{flex-direction:column-reverse;align-items:flex-start;padding:48px 0 40px}
+  h1{font-size:34px}
+  .avatar{width:104px;height:104px;border-radius:26px}
+}
+
+/* ---- 分区 ---- */
+section{padding:40px 0}
+.sec-head{display:flex;align-items:baseline;gap:12px;margin-bottom:20px}
+.sec-num{font-family:Consolas,monospace;font-weight:800;color:var(--v);font-size:14px}
+.sec-head h2{font-size:23px;letter-spacing:.01em}
+.sec-head .rule{flex:1;height:1px;background:var(--line)}
+
+/* 项目卡 */
+.proj{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.proj-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px;display:block;transition:transform .18s cubic-bezier(.23,1,.32,1),box-shadow .2s ease,border-color .2s ease}
+.proj-card:hover{transform:translateY(-3px);box-shadow:0 14px 34px -14px rgba(80,40,160,.25);border-color:rgba(124,58,237,.3);text-decoration:none}
+.proj-ico{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:21px;margin-bottom:12px}
+.proj-card b{font-size:16.5px;color:var(--ink)}
+.proj-card p{font-size:13px;color:var(--muted);margin-top:5px;line-height:1.7}
+.proj-link{display:inline-block;margin-top:10px;font-size:12.5px;font-weight:700;color:var(--v-dark)}
+.proj-status{float:right;font-size:10.5px;font-weight:700;border-radius:6px;padding:2px 8px}
+.st-live{background:#ecfdf5;color:#059669}.st-dev{background:#fff7ed;color:#d95a0a}
+@media (max-width:640px){.proj{grid-template-columns:1fr}}
+
+/* 技能 */
+.skills{display:flex;flex-wrap:wrap;gap:10px}
+.skill{background:#fff;border:1px solid var(--line);border-radius:10px;padding:9px 16px;font-size:13.5px;font-weight:600;display:flex;align-items:center;gap:8px}
+.dot{width:8px;height:8px;border-radius:50%}
+
+/* 关于 */
+.about-p{font-size:15px;line-height:2;color:var(--ink);margin-bottom:14px;max-width:680px}
+.about-p .muted{color:var(--muted)}
+
+/* 页脚 */
+footer{border-top:1px solid var(--line);margin-top:30px;padding:30px 0 46px}
+.f-inner{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--muted)}
+.f-inner a{color:var(--v-dark);font-weight:600}
+:focus-visible{outline:2px solid #a855f7;outline-offset:2px;border-radius:6px}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <span class="logo">周何<b>.dev</b></span>
+    <div class="nav-links">
+      <a href="#projects">项目</a>
+      <a href="#skills">技能</a>
+      <a href="#about">关于</a>
+      <a href="https://github.com/zhouhe1234" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <header class="hero">
+    <div class="hero-txt">
+      <p class="hello">&gt; 你好，世界_</p>
+      <h1>我是周何，<br>把课堂学的<span class="hl">做成能用的</span>。</h1>
+      <p class="tagline">网络与新媒体专业在读 · 内容创作者 · AI 重度玩家。这里是我亲手写的每一个小产品。</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#projects">看我做了什么</a>
+        <a class="btn btn-ghost" href="resume/index.html">简历生成器 →</a>
+      </div>
+    </div>
+    <svg class="avatar" viewBox="0 0 150 150" xmlns="http://www.w3.org/2000/svg" aria-label="头像">
+      <defs>
+        <linearGradient id="av" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7c3aed"/><stop offset="1" stop-color="#d946ef"/></linearGradient>
+      </defs>
+      <rect width="150" height="150" rx="36" fill="url(#av)"/>
+      <circle cx="75" cy="58" r="24" fill="#ffffff" opacity=".92"/>
+      <path d="M32 132 c 8 -30, 78 -30, 86 0 l 0 18 -86 0 Z" fill="#ffffff" opacity=".92"/>
+    </svg>
+  </header>
+
+  <section id="projects">
+    <div class="sec-head"><span class="sec-num">01</span><h2>我做的项目</h2><span class="rule"></span></div>
+    <div class="proj">
+      <a class="proj-card" href="https://zhouhe1234.github.io/newmedia-academy/" target="_blank" rel="noopener">
+        <span class="proj-status st-live">已上线</span>
+        <div class="proj-ico" style="background:#f3efff">🎓</div>
+        <b>新媒学园</b>
+        <p>网络与新媒体专业学习站：四年路线图、11 门课业速通（112 概念）、9 个训练模块、AI 批改教练、速记闪卡。我的专业，我自己做教材。</p>
+        <span class="proj-link">访问站点 →</span>
+      </a>
+      <a class="proj-card" href="ai-toolkit/index.html">
+        <span class="proj-status st-dev">本站</span>
+        <div class="proj-ico" style="background:#fff7ed">🤖</div>
+        <b>大学生 AI 工具箱</b>
+        <p>分类收录写作 / 图像 / 视频 / 学习类 AI 工具，每个带使用场景、免费度和可直接复制的提示词示例。</p>
+        <span class="proj-link">打开 →</span>
+      </a>
+      <a class="proj-card" href="tools/index.html">
+        <span class="proj-status st-dev">本站</span>
+        <div class="proj-ico" style="background:#eafaf2">🧰</div>
+        <b>新媒体小工具合集</b>
+        <p>字数统计、二维码生成、配色摇号、文本清理、随机选题——新媒体人每天顺手要用的小工具，都在这。</p>
+        <span class="proj-link">打开 →</span>
+      </a>
+      <a class="proj-card" href="resume/index.html">
+        <span class="proj-status st-dev">本站</span>
+        <div class="proj-ico" style="background:#fdf0f7">📄</div>
+        <b>简历生成器</b>
+        <p>表单填写、实时预览、一键打印成 A4 简历。数据存本机，随时导出备份。</p>
+        <span class="proj-link">打开 →</span>
+      </a>
+      <a class="proj-card" href="https://github.com/zhouhe1234/cet4-sprint" target="_blank" rel="noopener">
+        <span class="proj-status st-live">已上线</span>
+        <div class="proj-ico" style="background:#eef4ff">📗</div>
+        <b>四级冲关计划</b>
+        <p>234 个高频词 + 间隔重复 + 每日一练 + 错题本，我的第一个网站，12 月四级见。</p>
+        <span class="proj-link">查看源码 →</span>
+      </a>
+      <a class="proj-card" href="https://github.com/zhouhe1234" target="_blank" rel="noopener">
+        <span class="proj-status st-live">开源</span>
+        <div class="proj-ico" style="background:#f5f3ff">💻</div>
+        <b>GitHub @zhouhe1234</b>
+        <p>以上全部项目的源码都在这。零依赖、纯前端、数据存本机——欢迎随便看随便用。</p>
+        <span class="proj-link">去逛逛 →</span>
+      </a>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="sec-head"><span class="sec-num">02</span><h2>我在练的技能</h2><span class="rule"></span></div>
+    <div class="skills">
+      <span class="skill"><i class="dot" style="background:#7c3aed"></i>HTML / CSS / 原生 JS</span>
+      <span class="skill"><i class="dot" style="background:#0ea5e9"></i>AI 提示词工程</span>
+      <span class="skill"><i class="dot" style="background:#f59e0b"></i>文案与标题写作</span>
+      <span class="skill"><i class="dot" style="background:#10b981"></i>新媒体运营思维</span>
+      <span class="skill"><i class="dot" style="background:#ef4444"></i>剪映 / 视频剪辑</span>
+      <span class="skill"><i class="dot" style="background:#ec4899"></i>PS / AI 平面基础</span>
+      <span class="skill"><i class="dot" style="background:#6366f1"></i>Git / GitHub 部署</span>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="sec-head"><span class="sec-num">03</span><h2>关于我</h2><span class="rule"></span></div>
+    <p class="about-p">武汉设计工程学院网络与新媒体专业，大二在读。大一学完传播学、新闻学、摄影和平面设计，大二开始把专业「翻译」成真正能用的东西：一个学习站、一个备考工具、一套 AI 工作流。</p>
+    <p class="about-p">我相信这个专业最重要的能力是<span class="muted"><b>「把内容做成产品」</b></span>——所以我不用 PPT 展示学过什么，直接把做出来的东西摆在这里。这个页面、以及它链接的每一个站点，代码全由我（和 AI 搭档）手写，零模板、零依赖。</p>
+    <p class="about-p muted" style="font-size:13.5px">找我要简历？上面的简历生成器就是为这一刻准备的。</p>
+  </section>
+
+</div>
+
+<footer>
+  <div class="wrap f-inner">
+    <span>© 2026 周何 · 网络与新媒体</span>
+    <span>本站与子站点全部数据仅存于浏览器本机</span>
+    <a href="https://github.com/zhouhe1234" target="_blank" rel="noopener">github.com/zhouhe1234</a>
+  </div>
+</footer>
+
+</body>
+</html>

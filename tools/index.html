@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>新媒体小工具合集 · 周何</title>
+<meta name="description" content="字数统计、二维码生成、配色摇号、文本清理、随机选题——新媒体人每天顺手要用的小工具。">
+<script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs@master/qrcode.min.js"></script>
+<style>
+:root{
+  --ink:#221e33; --muted:#6f6a85; --line:#e7e3f0; --bg:#fbfaff;
+  --v:#7c3aed; --v-dark:#6d28d9; --v-soft:#f3efff; --card:#fff;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:"Microsoft YaHei UI","Microsoft YaHei","PingFang SC",system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;-webkit-font-smoothing:antialiased}
+.wrap{max-width:760px;margin:0 auto;padding:0 18px 60px}
+header{padding:26px 0 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+header h1{font-size:21px}
+header h1 span{color:var(--v)}
+.back{font-size:13px;color:var(--muted);text-decoration:none}
+.back:hover{color:var(--v-dark)}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:16px}
+.tab{border:1.5px solid var(--line);background:#fff;border-radius:20px;padding:8px 16px;font-size:13.5px;font-weight:700;color:var(--muted);white-space:nowrap;cursor:pointer;transition:.15s}
+.tab.active{background:var(--v);border-color:var(--v);color:#fff}
+.tool{display:none;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:0 8px 26px -14px rgba(80,40,160,.15)}
+.tool.on{display:block}
+.tool h2{font-size:16px;margin-bottom:6px}
+.tool .desc{font-size:13px;color:var(--muted);margin-bottom:14px}
+textarea,.tinput{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:11px 13px;font-size:14px;font-family:inherit;background:#fff;color:var(--ink);resize:vertical}
+textarea:focus,.tinput:focus{outline:none;border-color:var(--v)}
+.btn{border:none;background:var(--v);color:#fff;border-radius:10px;padding:10px 18px;font-size:14px;font-weight:700;cursor:pointer;transition:.15s;font-family:inherit}
+.btn:hover{filter:brightness(1.07)}
+.btn.ghost{background:var(--v-soft);color:var(--v-dark);border:1.5px solid #ddd0f5}
+.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+.stat{background:var(--v-soft);border-radius:12px;padding:12px 6px;text-align:center}
+.stat b{display:block;font-size:22px;font-family:Consolas,monospace;color:var(--v-dark);font-variant-numeric:tabular-nums}
+.stat span{font-size:11px;color:var(--muted)}
+#qrBox{display:flex;justify-content:center;margin:16px 0;padding:22px;background:#fff;border:1.5px dashed var(--line);border-radius:14px;min-height:180px;align-items:center}
+#qrBox img,#qrBox canvas{border-radius:8px}
+.pal{display:flex;gap:8px;margin:14px 0}
+.pal .sw{flex:1;height:64px;border-radius:10px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:6px;cursor:pointer;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06)}
+.pal .sw span{font-size:9.5px;font-family:Consolas,monospace;color:#fff;background:rgba(0,0,0,.35);border-radius:4px;padding:1px 5px}
+.locked{outline:3px solid var(--v);outline-offset:2px}
+.tips{font-size:12px;color:var(--muted);margin-top:12px;line-height:1.8}
+.topic-card{background:var(--v-soft);border-radius:14px;padding:20px;text-align:center;margin-top:14px}
+.topic-card b{font-size:17px;line-height:1.7;display:block}
+.topic-card .cat{font-size:11.5px;color:var(--v-dark);font-weight:700;margin-bottom:8px;display:block}
+.ok-msg{color:#059669;font-size:12.5px;font-weight:700;margin-left:8px}
+.back-home{display:inline-block;margin-top:26px;font-size:13px;color:var(--muted)}
+.back-home:hover{color:var(--v-dark)}
+@media (max-width:520px){.stat-grid{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>新媒体<span>小工具合集</span></h1>
+    <a class="back" href="../index.html">← 回主页</a>
+  </header>
+
+  <div class="tabs" id="tabs">
+    <button class="tab active" data-t="count">字数统计</button>
+    <button class="tab" data-t="qr">二维码生成</button>
+    <button class="tab" data-t="color">配色摇号</button>
+    <button class="tab" data-t="clean">文本清理</button>
+    <button class="tab" data-t="topic">随机选题</button>
+  </div>
+
+  <!-- 字数统计 -->
+  <div class="tool on" id="t-count">
+    <h2>字数统计</h2>
+    <p class="desc">发公众号 / 交作业前，先知道你写了多少。阅读时长按中文 300 字/分钟估算。</p>
+    <textarea id="countIn" rows="8" placeholder="把文字粘贴进来……"></textarea>
+    <div class="stat-grid">
+      <div class="stat"><b id="s-char">0</b><span>总字符</span></div>
+      <div class="stat"><b id="s-han">0</b><span>汉字</span></div>
+      <div class="stat"><b id="s-word">0</b><span>英文单词</span></div>
+      <div class="stat"><b id="s-punc">0</b><span>标点</span></div>
+      <div class="stat"><b id="s-line">1</b><span>段落数</span></div>
+      <div class="stat"><b id="s-min">0</b><span>阅读分钟</span></div>
+    </div>
+  </div>
+
+  <!-- 二维码 -->
+  <div class="tool" id="t-qr">
+    <h2>二维码生成</h2>
+    <p class="desc">把链接变成二维码（海报、简历、名片都能用）。生成在浏览器本地完成。</p>
+    <input class="tinput" id="qrIn" placeholder="粘贴链接或文字，如 https://…">
+    <div style="margin-top:10px"><button class="btn" id="qrGo">生成二维码</button><span class="ok-msg" id="qrMsg"></span></div>
+    <div id="qrBox"><p class="muted" style="color:var(--muted);font-size:13px">生成后显示在这里<br>（右键或长按可保存）</p></div>
+    <p class="tips">提示：二维码一旦生成就是图片，可以右键另存；二维码内容不可修改，改了文字要点重新生成。</p>
+  </div>
+
+  <!-- 配色摇号 -->
+  <div class="tool" id="t-color">
+    <h2>配色摇号</h2>
+    <p class="desc">给海报 / 封面找配色：摇出一组五色卡，点色块锁定它，再摇其他色。点色块上的编码可复制。</p>
+    <div class="pal" id="pal"></div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn" id="colGo">🎰 摇一组</button>
+      <button class="btn ghost" id="colLock">🔒 锁定全部 / 解锁</button>
+    </div>
+    <p class="tips">用法：先摇到一个喜欢的颜色锁住，继续摇到整体和谐为止。做海报时主色占比 60%、辅助 30%、点缀 10%。</p>
+  </div>
+
+  <!-- 文本清理 -->
+  <div class="tool" id="t-clean">
+    <h2>文本清理</h2>
+    <p class="desc">从 Word / 网页复制来的文字总是带一堆多余空格和空行？一键清干净。</p>
+    <textarea id="cleanIn" rows="7" placeholder="粘贴需要清理的文字……"></textarea>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin:10px 0">
+      <button class="btn ghost" data-c="space">去多余空格</button>
+      <button class="btn ghost" data-c="line">合并多余空行</button>
+      <button class="btn ghost" data-c="nl">换行→空格</button>
+      <button class="btn ghost" data-c="emoji">去表情符号</button>
+      <button class="btn" id="cleanCopy">复制结果</button>
+    </div>
+    <textarea id="cleanOut" rows="6" placeholder="清理结果…" readonly></textarea>
+  </div>
+
+  <!-- 随机选题 -->
+  <div class="tool" id="t-topic">
+    <h2>随机选题</h2>
+    <p class="desc">今天不知道拍什么写什么？摇一个。40 条校园新媒体选题，来自「新媒学园」选题库。</p>
+    <button class="btn" id="topicGo">🎲 摇一个选题</button>
+    <div class="topic-card" id="topicOut"><span class="cat">——</span><b>点上面的按钮，让命运替你定选题</b></div>
+    <p class="tips">摇到不喜欢的再摇一次；摇到心跳的那个，别犹豫，就是它。</p>
+  </div>
+
+  <a class="back-home" href="../index.html">← 返回周何的个人主页</a>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  const $ = s => document.querySelector(s);
+  const $$ = s => [...document.querySelectorAll(s)];
+  let toastT;
+  function toast(m){
+    let t = document.querySelector(".toast");
+    if(!t){ t = document.createElement("div");
+      t.style.cssText = "position:fixed;left:50%;bottom:34px;transform:translateX(-50%);background:rgba(30,25,50,.92);color:#fff;padding:9px 18px;border-radius:10px;font-size:13.5px;z-index:99;opacity:0;transition:.25s";
+      document.body.appendChild(t); }
+    t.textContent = m; t.style.opacity = 1;
+    clearTimeout(toastT); toastT = setTimeout(()=>t.style.opacity=0, 1800);
+  }
+
+  /* Tab 切换 */
+  document.querySelectorAll("#tabs .tab").forEach(b=>{
+    b.onclick = () => {
+      $$("#tabs .tab").forEach(x=>x.classList.remove("active"));
+      b.classList.add("active");
+      $$(".tool").forEach(t=>t.classList.toggle("on", t.id === "t-"+b.dataset.t));
+    };
+  });
+
+  /* 字数统计 */
+  $("#countIn").addEventListener("input", e=>{
+    const t = e.target.value;
+    const han = (t.match(/[\u4e00-\u9fa5]/g)||[]).length;
+    const en = (t.match(/[a-zA-Z]+/g)||[]).length;
+    const punc = (t.match(/[，。！？；：、""''（）【】,.!?;:"'()\[\]]/g)||[]).length;
+    const lines = t ? t.split(/\n/).filter(s=>s.trim()).length : 0;
+    $("#s-char").textContent = t.length;
+    $("#s-han").textContent = han;
+    $("#s-word").textContent = en;
+    $("#s-punc").textContent = punc;
+    $("#s-line").textContent = lines;
+    $("#s-min").textContent = Math.ceil((han + en) / 300);
+  });
+
+  /* 二维码 */
+  let qrMade = false;
+  $("#qrGo").onclick = () => {
+    const v = $("#qrIn").value.trim();
+    const box = $("#qrBox");
+    if(!v){ toast("先输入链接或文字"); return; }
+    if(typeof QRCode === "undefined"){ box.innerHTML = '<p style="color:#ef4444;font-size:13px">二维码组件需要联网加载（第一次打开时请联网）。</p>'; return; }
+    box.innerHTML = "";
+    try{
+      new QRCode(box, { text: v, width: 160, height: 160, colorDark: "#221e33", colorLight: "#ffffff", correctLevel: QRCode.CorrectLevel.M });
+      $("#qrMsg").textContent = "✓ 已生成";
+    }catch(e){ $("#qrMsg").textContent = ""; box.innerHTML = '<p style="color:#ef4444;font-size:13px">生成失败，请重试</p>'; }
+  };
+
+  /* 配色摇号 */
+  const locks = [false,false,false,false,false];
+  let pal = [];
+  const rand = (a,b)=>Math.floor(Math.random()*(b-a))+a;
+  function hsl2hex(h,s,l){
+    l/=100; const a=s*Math.min(l,1-l);
+    const f=n=>{const k=(n+h/30)%12;const c=l-a*Math.max(Math.min(k-3,9-k,1),-1);return Math.round(255*c).toString(16).padStart(2,"0");};
+    return "#"+f(0)+f(8)+f(4);
+  }
+  function drawPal(){
+    const box = $("#pal"); box.innerHTML = "";
+    pal.forEach((hex,i)=>{
+      const d = document.createElement("div");
+      d.className = "sw" + (locks[i] ? " locked" : "");
+      d.style.background = hex;
+      d.innerHTML = "<span>"+hex+"</span>";
+      d.title = locks[i] ? "已锁定（点击解锁）" : "点击锁定（点击编码复制）";
+      d.querySelector("span").onclick = (e)=>{ e.stopPropagation(); navigator.clipboard && navigator.clipboard.writeText(hex).then(()=>toast(hex+" 已复制")).catch(()=>{}); };
+      d.onclick = ()=>{ locks[i] = !locks[i]; drawPal(); };
+      box.appendChild(d);
+    });
+  }
+  $("#colGo").onclick = ()=>{
+    const baseH = rand(0,360), mode = rand(0,2);
+    const hs = mode===0 ? [baseH,baseH,baseH,baseH,baseH]
+      : mode===1 ? [baseH,(baseH+40)%360,(baseH+80)%360,(baseH+20)%360,baseH]
+      : [baseH,baseH,(baseH+180)%360,(baseH+200)%360,baseH];
+    pal = hs.map((h,i)=> locks[i] && pal[i] ? pal[i] : hsl2hex(h, rand(45,80), [22,38,55,72,86][i]));
+    drawPal();
+  };
+  $("#colLock").onclick = ()=>{ const all = locks.every(Boolean); locks.fill(!all); drawPal(); };
+  $("#colGo").click();
+
+  /* 文本清理 */
+  const cin = $("#cleanIn"), cout = $("#cleanOut");
+  $$("#t-clean [data-c]").forEach(b=>{
+    b.onclick = ()=>{
+      const t = cin.value;
+      if(!t){ toast("先粘贴文字"); return; }
+      const c = b.dataset.c;
+      cout.value = c==="space" ? t.replace(/[ \t]{2,}/g," ").replace(/ +/g," ").trim()
+        : c==="line" ? t.replace(/\n{3,}/g,"\n\n").trim()
+        : c==="nl" ? t.replace(/\n+/g," ").trim()
+        : t.replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}]/gu,"").trim();
+      toast("已清理，结果在下方");
+    };
+  });
+  $("#cleanCopy").onclick = ()=>{
+    if(!cout.value){ toast("没有可复制的内容"); return; }
+    if(navigator.clipboard) navigator.clipboard.writeText(cout.value).then(()=>toast("已复制")).catch(()=>toast("复制失败，请手动选择"));
+    else { cout.select(); document.execCommand("copy"); toast("已复制"); }
+  };
+
+  /* 随机选题 */
+  const topics = [
+    ["校园生活","食堂窗口排行榜：全校 12 个窗口实测"],["校园生活","凌晨的校园：保安、猫和赶 ddl 的人"],
+    ["校园生活","开学季快递站 24 小时实录"],["校园生活","我校共享单车坟场观察"],
+    ["学习成长","大一到大四，每个阶段最后悔的一件事"],["学习成长","国奖学霸的一天是怎么过的（跟拍）"],
+    ["学习成长","挂科边缘自救指南：3 天极限复习法实测"],["学习成长","我采访了 5 个从不熬夜的学霸"],
+    ["专业相关","网新学生的一天：上课/拍片/剪片/改稿"],["专业相关","用传播学理论拆一条爆款抖音"],
+    ["专业相关","AI 帮我做完一次课程作业的全过程"],["专业相关","第一次采访翻车实录与复盘"],
+    ["专业相关","网络与新媒体 vs 新闻学，到底差在哪"],["情感人际","大学室友关系的 4 种形态，你是哪种"],
+    ["情感人际","和父母视频时，我们都在报喜不报忧"],["情感人际","一个人吃饭的大学生，孤独吗"],
+    ["热点观察","热搜上的大学话题，评论区都在吵什么"],["热点观察","AI 又升级了，这次影响的是谁的饭碗"],
+    ["热点观察","考试周表情包考古：为什么年年都传同一批"],["热点观察","大学生消费观：为情绪价值买单的人有多少"],
+    ["热点观察","搭子文化：找搭子真的比交朋友容易吗"],["热点观察","毕业季摆摊数据：学长学姐都在抛售什么"],
+  ];
+  let lastTopic = -1;
+  $("#topicGo").onclick = ()=>{
+    let i = Math.floor(Math.random()*topics.length);
+    if(i === lastTopic) i = (i+1)%topics.length;
+    lastTopic = i;
+    $("#topicOut").innerHTML = '<span class="cat">'+topics[i][0]+'</span><b>'+topics[i][1]+'</b>';
+  };
+})();
+</script>
+</body>
+</html>

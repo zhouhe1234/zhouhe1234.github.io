@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>简历生成器 · 周何</title>
+<meta name="description" content="填表单、看预览、一键打印 A4 简历。数据存本机，可导出备份。">
+<style>
+:root{
+  --ink:#221e33; --muted:#6f6a85; --line:#e7e3f0; --bg:#fbfaff;
+  --v:#7c3aed; --v-dark:#6d28d9; --v-soft:#f3efff; --card:#fff;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:"Microsoft YaHei UI","Microsoft YaHei","PingFang SC",system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.65;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1100px;margin:0 auto;padding:0 18px 60px}
+header{padding:22px 0 16px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+header h1{font-size:20px}
+header h1 span{color:var(--v)}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn{border:none;border-radius:10px;padding:9px 16px;font-size:13.5px;font-weight:700;cursor:pointer;background:var(--v);color:#fff;transition:.15s;font-family:inherit}
+.btn:hover{filter:brightness(1.07)}
+.btn.ghost{background:#fff;color:var(--v-dark);border:1.5px solid #ddd0f5}
+.layout{display:grid;grid-template-columns:420px 1fr;gap:22px;align-items:start}
+@media (max-width:900px){.layout{grid-template-columns:1fr}}
+/* 表单 */
+.form{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:14px}
+.fgroup{border:1px solid var(--line);border-radius:12px;padding:12px}
+.fgroup>b{font-size:13px;color:var(--v-dark);display:block;margin-bottom:9px}
+.frow{display:flex;gap:8px;margin-bottom:8px}
+.frow>*{flex:1}
+input,textarea,select{width:100%;border:1.5px solid var(--line);border-radius:9px;padding:9px 11px;font-size:13.5px;font-family:inherit;background:#fff;color:var(--ink);resize:vertical}
+input:focus,textarea:focus{outline:none;border-color:var(--v)}
+label{font-size:12px;color:var(--muted);display:block;margin-bottom:4px}
+.entry{background:var(--v-soft);border-radius:10px;padding:10px;margin-bottom:8px}
+.entry .frow{margin-bottom:6px}
+.del{border:none;background:#fee2e2;color:#ef4444;border-radius:7px;padding:5px 10px;font-size:12px;font-weight:700;cursor:pointer}
+.add{border:1.5px dashed var(--v);background:transparent;color:var(--v-dark);border-radius:9px;padding:8px;font-size:12.5px;font-weight:700;cursor:pointer;width:100%}
+/* 预览 */
+.preview-wrap{background:#9aa; padding:14px;border-radius:16px;overflow:auto}
+.paper{background:#fff;width:100%;max-width:794px;margin:0 auto;min-height:1050px;padding:46px 52px;box-shadow:0 10px 40px rgba(0,0,0,.25);font-family:"Microsoft YaHei UI","Microsoft YaHei",system-ui,sans-serif;color:#222}
+.paper .name{font-size:30px;font-weight:800;letter-spacing:.04em}
+.paper .intent{font-size:14.5px;color:#7c3aed;font-weight:700;margin:2px 0 8px}
+.paper .contact{font-size:12px;color:#555;display:flex;flex-wrap:wrap;gap:5px 16px;padding-bottom:12px;border-bottom:2px solid #7c3aed}
+.paper h3{font-size:15px;margin:18px 0 8px;color:#222;border-left:4px solid #7c3aed;padding-left:9px}
+.paper .edu b{font-size:13.5px}
+.paper .edu span{float:right;font-size:12px;color:#666}
+.paper .edu p{font-size:12.5px;color:#444;margin-top:3px;clear:both}
+.paper .item{margin-bottom:11px}
+.paper .item .ih{display:flex;justify-content:space-between;align-items:baseline}
+.paper .item .ih b{font-size:13.5px}
+.paper .item .ih span{font-size:11.5px;color:#666}
+.paper .item p{font-size:12.5px;color:#333;line-height:1.8;margin-top:3px;white-space:pre-wrap}
+.paper .skill-tags{display:flex;flex-wrap:wrap;gap:6px}
+.paper .skill-tags span{font-size:11.5px;background:#f3efff;color:#5b21b6;border-radius:5px;padding:3px 10px}
+.paper .self{font-size:12.5px;color:#333;line-height:1.9;white-space:pre-wrap}
+.hint{font-size:12px;color:var(--muted);margin-top:10px;line-height:1.8}
+@media print{
+  body{background:#fff}
+  header,.form,.hint,.preview-wrap .no-print,.wrap>.actions{display:none!important}
+  .layout{display:block}
+  .preview-wrap{background:none;padding:0;border-radius:0}
+  .paper{box-shadow:none;max-width:none;min-height:auto;padding:10mm 12mm}
+  @page{size:A4;margin:8mm}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>📄 简历<span>生成器</span></h1>
+    <div class="actions">
+      <button class="btn ghost" id="exportBtn">导出数据</button>
+      <button class="btn ghost" id="importBtn">导入数据</button>
+      <input type="file" id="importFile" accept=".json" style="display:none">
+      <button class="btn" id="printBtn">🖨 打印 / 存 PDF</button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <div class="form">
+      <div class="fgroup">
+        <b>基本信息</b>
+        <div class="frow"><div><label>姓名</label><input id="f-name" placeholder="周何"></div><div><label>求职意向</label><input id="f-intent" placeholder="新媒体运营实习生"></div></div>
+        <div class="frow"><div><label>电话</label><input id="f-phone" placeholder="138xxxx0000"></div><div><label>邮箱</label><input id="f-mail" placeholder="you@example.com"></div></div>
+        <label>其他链接（GitHub / 主页 / 账号）</label>
+        <input id="f-links" placeholder="github.com/zhouhe1234">
+      </div>
+      <div class="fgroup">
+        <b>教育背景</b>
+        <div class="frow"><div><label>学校</label><input id="f-school" placeholder="武汉设计工程学院"></div><div><label>时间</label><input id="f-eduTime" placeholder="2025.09 - 2029.06"></div></div>
+        <div class="frow"><div><label>专业</label><input id="f-major" placeholder="网络与新媒体（本科）"></div><div><label>备注（GPA/主修）</label><input id="f-eduNote" placeholder="主修：采写/剪辑/数据分析"></div></div>
+      </div>
+      <div class="fgroup">
+        <b>技能标签（逗号分隔）</b>
+        <textarea id="f-skills" rows="2" placeholder="剪映, PS/AI, AI 提示词, 公众号排版, 问卷设计"></textarea>
+      </div>
+      <div class="fgroup">
+        <b>实践经历</b>
+        <div id="expList"></div>
+        <button class="add" id="addExp">＋ 添加一段经历</button>
+      </div>
+      <div class="fgroup">
+        <b>项目 / 作品</b>
+        <div id="projList"></div>
+        <button class="add" id="addProj">＋ 添加一个项目</button>
+      </div>
+      <div class="fgroup">
+        <b>自我评价</b>
+        <textarea id="f-self" rows="3" placeholder="写 2-3 句：你是谁、你和其他人比强在哪、你想往哪走"></textarea>
+      </div>
+      <p class="hint">数据自动保存在本机浏览器。「导出数据」生成 JSON 备份，「打印」时可另存为 PDF。右上角链接建议放你的 GitHub 主页。</p>
+    </div>
+
+    <div class="preview-wrap">
+      <div class="paper" id="paper">
+        <div class="name" id="p-name">你的名字</div>
+        <div class="intent" id="p-intent">求职意向</div>
+        <div class="contact"><span id="p-phone"></span><span id="p-mail"></span><span id="p-links"></span></div>
+        <h3>教育背景</h3>
+        <div class="edu"><b id="p-school">学校</b><span id="p-eduTime"></span><p id="p-majorLine"></p></div>
+        <h3>技能</h3>
+        <div class="skill-tags" id="p-skills"></div>
+        <h3>实践经历</h3>
+        <div id="p-exp"></div>
+        <h3>项目 / 作品</h3>
+        <div id="p-proj"></div>
+        <h3>自我评价</h3>
+        <div class="self" id="p-self"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  const $ = s => document.querySelector(s);
+  const KEY = "resume_v1";
+  let entries = { exp: [], proj: [] };
+
+  function load(){
+    try{ entries = JSON.parse(localStorage.getItem(KEY)) || {exp:[],proj:[]}; }catch(e){ entries = {exp:[],proj:[]}; }
+    try{
+      const f = JSON.parse(localStorage.getItem(KEY+"_fields") || "{}");
+      ["name","intent","phone","mail","links","school","eduTime","major","eduNote","skills","self"].forEach(k=>{
+        if(f[k]) $("#f-"+k).value = f[k];
+      });
+    }catch(e){}
+    if(!entries.exp.length) entries.exp.push({time:"",title:"",desc:""});
+    if(!entries.proj.length) entries.proj.push({time:"",title:"",desc:""});
+  }
+  function saveFields(){
+    const f = {};
+    ["name","intent","phone","mail","links","school","eduTime","major","eduNote","skills","self"].forEach(k=>{ f[k] = $("#f-"+k).value; });
+    localStorage.setItem(KEY+"_fields", JSON.stringify(f));
+  }
+  function saveEntries(){ localStorage.setItem(KEY, JSON.stringify(entries)); }
+
+  function renderEntries(kind){
+    const box = $("#"+kind+"List");
+    box.innerHTML = "";
+    entries[kind].forEach((en, i) => {
+      const d = document.createElement("div");
+      d.className = "entry";
+      d.innerHTML =
+        '<div class="frow"><input placeholder="时间 如 2026.03-2026.06" value="'+(en.time||"")+'" data-f="time"><input placeholder="组织 / 项目名" value="'+(en.title||"")+'" data-f="title"><button class="del">删</button></div>' +
+        '<textarea rows="2" placeholder="做了什么、结果如何（有数据最好）" data-f="desc">'+(en.desc||"")+"</textarea>";
+      d.querySelectorAll("[data-f]").forEach(inp => inp.addEventListener("input", () => {
+        entries[kind][i][inp.dataset.f] = inp.value; saveEntries(); renderPreview();
+      }));
+      d.querySelector(".del").onclick = () => { entries[kind].splice(i,1); saveEntries(); renderEntries(kind); renderPreview(); };
+      box.appendChild(d);
+    });
+  }
+  function bindAdd(btnId, kind){
+    $(btnId).onclick = () => {
+      entries[kind].push({time:"",title:"",desc:""});
+      saveEntries(); renderEntries(kind); renderPreview();
+      const boxes = $("#"+kind+"List").querySelectorAll(".entry");
+      boxes[boxes.length-1].scrollIntoView({behavior:"smooth",block:"center"});
+    };
+  }
+
+  function renderPreview(){
+    const v = id => $("#f-"+id).value;
+    $("#p-name").textContent = v("name") || "你的名字";
+    $("#p-intent").textContent = v("intent") ? "求职意向：" + v("intent") : "求职意向";
+    $("#p-phone").textContent = v("phone") ? "📞 " + v("phone") : "";
+    $("#p-mail").textContent = v("mail") ? "✉ " + v("mail") : "";
+    $("#p-links").textContent = v("links") || "";
+    $("#p-school").textContent = v("school") || "学校";
+    $("#p-eduTime").textContent = v("eduTime");
+    $("#p-majorLine").textContent = [v("major"), v("eduNote")].filter(Boolean).join(" · ");
+    const skills = v("skills").split(/[,，、]/).map(s=>s.trim()).filter(Boolean);
+    $("#p-skills").innerHTML = skills.length ? skills.map(s=>"<span>"+s+"</span>").join("") : "<span style='color:#999;font-size:12px'>在左侧填写技能，逗号分隔</span>";
+    $("#p-exp").innerHTML = entries.exp.filter(e=>e.title||e.desc).map(e =>
+      '<div class="item"><div class="ih"><b>'+ (e.title||"") +"</b><span>"+ (e.time||"") +'</span></div><p>'+ (e.desc||"") +"</p></div>"
+    ).join("") || '<div class="item"><p style="color:#999">左侧添加经历</p></div>';
+    $("#p-proj").innerHTML = entries.proj.filter(e=>e.title||e.desc).map(e =>
+      '<div class="item"><div class="ih"><b>'+ (e.title||"") +"</b><span>"+ (e.time||"") +'</span></div><p>'+ (e.desc||"") +"</p></div>"
+    ).join("") || '<div class="item"><p style="color:#999">左侧添加项目</p></div>';
+    $("#p-self").textContent = v("self");
+    saveFields();
+  }
+
+  $("#printBtn").onclick = () => window.print();
+  $("#exportBtn").onclick = () => {
+    saveEntries();
+    const data = { fields: {}, entries };
+    ["name","intent","phone","mail","links","school","eduTime","major","eduNote","skills","self"].forEach(k=>{ data.fields[k] = $("#f-"+k).value; });
+    const blob = new Blob([JSON.stringify(data,null,2)], {type:"application/json"});
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "简历数据-" + new Date().toISOString().slice(0,10) + ".json";
+    a.click();
+    setTimeout(()=>URL.revokeObjectURL(a.href), 1000);
+  };
+  $("#importBtn").onclick = () => $("#importFile").click();
+  $("#importFile").onchange = e => {
+    const file = e.target.files[0]; if(!file) return;
+    const r = new FileReader();
+    r.onload = () => {
+      try{
+        const data = JSON.parse(r.result);
+        localStorage.setItem(KEY+"_fields", JSON.stringify(data.fields||{}));
+        localStorage.setItem(KEY, JSON.stringify(data.entries||{exp:[],proj:[]}));
+        location.reload();
+      }catch(err){ alert("导入失败：不是本工具导出的备份文件"); }
+    };
+    r.readAsText(file);
+    e.target.value = "";
+  };
+
+  ["name","intent","phone","mail","links","school","eduTime","major","eduNote","skills","self"].forEach(k=>{
+    $("#f-"+k).addEventListener("input", renderPreview);
+  });
+  load();
+  renderEntries("exp"); renderEntries("proj");
+  bindAdd("#addExp","exp"); bindAdd("#addProj","proj");
+  renderPreview();
+})();
+</script>
+</body>
+</html>
