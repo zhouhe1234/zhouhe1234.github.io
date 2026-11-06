@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#fbfaf7">
 <title>周何 · 网络与新媒体学生</title>
 <meta name="description" content="周何的个人空间：学习站、备考工具、AI 工具箱、小工具合集——全部自己写、自己部署。">
 <meta property="og:title" content="周何 · 个人空间">
@@ -13,107 +14,148 @@
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <style>
 :root{
-  --ink:#221e33; --muted:#6f6a85; --line:#e7e3f0; --bg:#fbfaff;
-  --v:#7c3aed; --v-dark:#6d28d9; --v-soft:#f3efff;
+  --ink:#1b1a18; --muted:#6a655f; --line:#e5e0d8; --bg:#fbfaf7;
+  --v:#1f3a5f; --v-dark:#16304f; --v-soft:#edf2f7;
+  --warm:#b3452f; --gold:#a67c2e; --green:#3f6b52; --plum:#7a3f5c;
+  --serif:"Songti SC","Source Han Serif SC","Noto Serif SC","SimSun",Georgia,serif;
+  --sans:"Microsoft YaHei UI","Microsoft YaHei","PingFang SC",system-ui,sans-serif;
+  --ease:cubic-bezier(.2,.7,.3,1);
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html{scroll-behavior:smooth}
-body{font-family:"Microsoft YaHei UI","Microsoft YaHei","PingFang SC",system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;-webkit-font-smoothing:antialiased}
-::selection{background:rgba(168,85,247,.25)}
-a{color:var(--v-dark);text-decoration:none}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{font-family:var(--sans);color:var(--ink);line-height:1.75;-webkit-font-smoothing:antialiased;font-size:16px;overflow-x:hidden;
+  background:
+    radial-gradient(900px 520px at 12% -6%, rgba(31,58,95,.085), transparent 72%),
+    radial-gradient(820px 460px at 88% -4%, rgba(179,69,47,.075), transparent 74%),
+    radial-gradient(700px 380px at 50% 2%, rgba(166,124,46,.05), transparent 76%),
+    var(--bg)}
+::selection{background:rgba(31,58,95,.16)}
+a{color:var(--v-dark);text-decoration:none;text-underline-offset:3px}
 a:hover{text-decoration:underline}
-.wrap{max-width:880px;margin:0 auto;padding:0 22px}
+.wrap{max-width:860px;margin:0 auto;padding:0 22px}
 
 /* ---- 顶栏 ---- */
-nav{position:sticky;top:0;z-index:50;background:rgba(251,250,255,.8);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
-.nav-inner{max-width:880px;margin:0 auto;padding:14px 22px;display:flex;align-items:center;justify-content:space-between}
-.logo{font-weight:800;font-size:16px;letter-spacing:.04em}
-.logo b{color:var(--v)}
-.nav-links{display:flex;gap:20px;font-size:13.5px;font-weight:600}
-.nav-links a{color:var(--muted)}
-.nav-links a:hover{color:var(--v-dark);text-decoration:none}
+nav{position:sticky;top:0;z-index:50;background:rgba(251,250,247,.86);backdrop-filter:blur(12px) saturate(1.4);-webkit-backdrop-filter:blur(12px) saturate(1.4);border-bottom:1px solid var(--line)}
+.nav-inner{max-width:860px;margin:0 auto;padding:15px 22px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:var(--serif);font-weight:700;font-size:17px;letter-spacing:.02em}
+.logo b{color:var(--warm);font-weight:400}
+.nav-links{display:flex;gap:22px;font-size:13.5px}
+.nav-links a{color:var(--muted);position:relative;padding-bottom:2px}
+.nav-links a::after{content:"";position:absolute;left:0;right:100%;bottom:0;height:1px;background:var(--v);transition:right .25s var(--ease)}
+.nav-links a:hover{color:var(--v);text-decoration:none}
+.nav-links a:hover::after{right:0}
 
 /* ---- Hero ---- */
-.hero{padding:72px 0 58px;display:flex;gap:36px;align-items:center}
+.hero{padding:76px 0 60px;display:flex;gap:40px;align-items:center;position:relative}
 .hero-txt{flex:1}
-.hello{font-family:Consolas,monospace;color:var(--v);font-size:15px;font-weight:700}
-h1{font-size:44px;line-height:1.2;letter-spacing:-.01em;margin:10px 0 14px}
-h1 .hl{color:var(--v)}
-.tagline{font-size:16.5px;color:var(--muted);max-width:520px}
-.hero-cta{margin-top:24px;display:flex;gap:12px;flex-wrap:wrap}
-.btn{display:inline-block;padding:11px 22px;border-radius:12px;font-weight:700;font-size:14.5px;border:1.5px solid transparent;cursor:pointer;transition:transform .12s cubic-bezier(.23,1,.32,1),filter .15s ease}
-.btn:active{transform:scale(.97)}
-.btn-primary{background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 4px 14px -4px rgba(124,58,237,.5)}
-.btn-primary:hover{filter:brightness(1.07);text-decoration:none}
-.btn-ghost{border-color:var(--line);color:var(--ink);background:#fff}
-.btn-ghost:hover{border-color:var(--v)}
-.avatar{width:150px;height:150px;flex-shrink:0;border-radius:36px;box-shadow:0 20px 50px -18px rgba(124,58,237,.45)}
+.hello{font-size:13px;letter-spacing:.08em;color:var(--muted)}
+h1{font-family:var(--serif);font-weight:700;font-size:42px;line-height:1.3;letter-spacing:-.01em;margin:12px 0 16px}
+h1 .hl{color:var(--warm);position:relative;white-space:nowrap}
+h1 .hl::after{content:"";position:absolute;left:0;right:0;bottom:2px;height:7px;background:rgba(179,69,47,.16);z-index:-1;border-radius:2px}
+.tagline{font-size:16px;color:var(--muted);max-width:520px;line-height:1.85}
+.hero-cta{margin-top:26px;display:flex;gap:10px;flex-wrap:wrap}
+.btn{display:inline-block;padding:11px 21px;border-radius:4px;font-size:14.5px;border:1px solid transparent;cursor:pointer;
+  transition:transform .18s var(--ease),box-shadow .22s ease,background .18s ease,border-color .18s ease,color .18s ease}
+.btn-primary{background:linear-gradient(180deg,#28496f,#1a3352);color:#fff;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.16),0 6px 16px -10px rgba(31,58,95,.75)}
+.btn-primary:hover{background:linear-gradient(180deg,#2d517b,#1b3657);text-decoration:none;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 10px 22px -10px rgba(31,58,95,.6);transform:translateY(-1px)}
+.btn-primary:active{transform:translateY(1px) scale(.985);box-shadow:inset 0 1px 0 rgba(0,0,0,.12),0 2px 6px -4px rgba(31,58,95,.7)}
+.btn-ghost{border-color:var(--line);color:var(--ink);background:rgba(255,255,255,.5)}
+.btn-ghost:hover{border-color:var(--v);color:var(--v);text-decoration:none;background:#fff;transform:translateY(-1px);
+  box-shadow:0 8px 18px -14px rgba(31,58,95,.55)}
+.btn-ghost:active{transform:translateY(1px) scale(.985)}
+.avatar{width:132px;height:132px;flex-shrink:0;border-radius:10px;border:1px solid var(--line);display:block;
+  box-shadow:0 18px 36px -24px rgba(31,58,95,.55);transition:transform .3s var(--ease),box-shadow .3s ease}
+.avatar:hover{transform:translateY(-2px) rotate(-1deg);box-shadow:0 24px 44px -22px rgba(31,58,95,.5)}
 @media (max-width:640px){
-  .hero{flex-direction:column-reverse;align-items:flex-start;padding:48px 0 40px}
-  h1{font-size:34px}
-  .avatar{width:104px;height:104px;border-radius:26px}
+  .hero{flex-direction:column-reverse;align-items:flex-start;padding:50px 0 40px;gap:24px}
+  h1{font-size:31px}
+  h1 .hl{white-space:normal}
+  .avatar{width:92px;height:92px}
+  .nav-links{gap:13px;font-size:12.5px}
+  .logo{font-size:16px}
 }
 
 /* ---- 分区 ---- */
-section{padding:40px 0}
-.sec-head{display:flex;align-items:baseline;gap:12px;margin-bottom:20px}
-.sec-num{font-family:Consolas,monospace;font-weight:800;color:var(--v);font-size:14px}
-.sec-head h2{font-size:23px;letter-spacing:.01em}
-.sec-head .rule{flex:1;height:1px;background:var(--line)}
+section{padding:44px 0}
+.sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:22px}
+.sec-num{font-family:var(--serif);color:var(--warm);font-size:14px}
+.sec-head h2{font-family:var(--serif);font-weight:700;font-size:22px;letter-spacing:.01em}
+.sec-head .rule{flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
 
 /* 项目卡 */
-.proj{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.proj-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px;display:block;transition:transform .18s cubic-bezier(.23,1,.32,1),box-shadow .2s ease,border-color .2s ease}
-.proj-card:hover{transform:translateY(-3px);box-shadow:0 14px 34px -14px rgba(80,40,160,.25);border-color:rgba(124,58,237,.3);text-decoration:none}
-.proj-ico{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:21px;margin-bottom:12px}
-.proj-card b{font-size:16.5px;color:var(--ink)}
-.proj-card p{font-size:13px;color:var(--muted);margin-top:5px;line-height:1.7}
-.proj-link{display:inline-block;margin-top:10px;font-size:12.5px;font-weight:700;color:var(--v-dark)}
-.proj-status{float:right;font-size:10.5px;font-weight:700;border-radius:6px;padding:2px 8px}
-.st-live{background:#ecfdf5;color:#059669}.st-dev{background:#fff7ed;color:#d95a0a}
-@media (max-width:640px){.proj{grid-template-columns:1fr}}
+.proj{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.proj-card{position:relative;overflow:hidden;background:#fff;border:1px solid var(--line);border-radius:6px;padding:20px 20px 18px;display:block;
+  transition:transform .2s var(--ease),box-shadow .24s ease,border-color .2s ease}
+.proj-card::before{content:"";position:absolute;inset:0;border-radius:inherit;opacity:0;transition:opacity .25s ease;pointer-events:none;
+  background:linear-gradient(150deg,rgba(31,58,95,.055),rgba(255,255,255,0) 58%)}
+.proj-card:hover{transform:translateY(-3px);border-color:#c8d2de;box-shadow:0 16px 32px -24px rgba(31,58,95,.6);text-decoration:none}
+.proj-card:hover::before{opacity:1}
+.proj-card:active{transform:translateY(-1px) scale(.995)}
+.proj-idx{display:block;font-family:var(--serif);font-size:13px;color:var(--muted);margin-bottom:10px;letter-spacing:.06em;transition:color .2s}
+.proj-card:hover .proj-idx{color:var(--v)}
+.proj-card:nth-child(1) .proj-idx{color:var(--v)}
+.proj-card:nth-child(2) .proj-idx{color:var(--warm)}
+.proj-card:nth-child(3) .proj-idx{color:var(--gold)}
+.proj-card:nth-child(4) .proj-idx{color:var(--green)}
+.proj-card:nth-child(5) .proj-idx{color:var(--plum)}
+.proj-card:nth-child(6) .proj-idx{color:var(--v)}
+.proj-card:nth-child(3n+1):hover{border-color:#c8b7ad}
+.proj-card:nth-child(3n+2):hover{border-color:#b9c6bd}
+.proj-card b{font-size:16px;color:var(--ink);font-weight:700}
+.proj-card p{font-size:13.5px;color:var(--muted);margin-top:6px;line-height:1.75}
+.proj-link{display:inline-block;margin-top:12px;font-size:13px;color:var(--v);transition:transform .2s var(--ease)}
+.proj-card:hover .proj-link{transform:translateX(3px)}
+.proj-status{float:right;font-size:11px;letter-spacing:.04em;border:1px solid var(--line);border-radius:3px;padding:1px 7px}
+.st-live{color:var(--v);background:var(--v-soft);border-color:#d6e0ea}
+.st-dev{color:var(--warm);background:#faf0ea;border-color:#ecd9cf}
+@media (max-width:640px){.proj{grid-template-columns:1fr};.proj-card:hover{transform:none}}
 
 /* 技能 */
-.skills{display:flex;flex-wrap:wrap;gap:10px}
-.skill{background:#fff;border:1px solid var(--line);border-radius:10px;padding:9px 16px;font-size:13.5px;font-weight:600;display:flex;align-items:center;gap:8px}
-.dot{width:8px;height:8px;border-radius:50%}
+.skills{display:flex;flex-wrap:wrap;gap:8px}
+.skill{border:1px solid var(--line);border-radius:3px;padding:6px 12px;font-size:13px;color:var(--ink);background:rgba(255,255,255,.55);
+  transition:border-color .18s ease,background .18s ease,transform .18s var(--ease),color .18s ease}
+.skill:hover{border-color:var(--v);color:var(--v);background:#fff;transform:translateY(-1px)}
 
 /* 关于 */
-.about-p{font-size:15px;line-height:2;color:var(--ink);margin-bottom:14px;max-width:680px}
+.about-p{font-size:15.5px;line-height:1.95;color:var(--ink);margin-bottom:14px;max-width:660px}
 .about-p .muted{color:var(--muted)}
 
-/* 页脚 */
-footer{border-top:1px solid var(--line);margin-top:30px;padding:30px 0 46px}
-.f-inner{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--muted)}
-.f-inner a{color:var(--v-dark);font-weight:600}
-:focus-visible{outline:2px solid #a855f7;outline-offset:2px;border-radius:6px}
-/* 动效体系（Emil 原则）：入场 riseIn + 错峰 + 减弱动效支持 */
-@keyframes riseIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-section,.proj-card{animation:riseIn .3s cubic-bezier(.23,1,.32,1) both}
-.proj-card:nth-child(2){animation-delay:.05s}
-.proj-card:nth-child(3){animation-delay:.1s}
-.proj-card:nth-child(4){animation-delay:.15s}
-.proj-card:nth-child(5){animation-delay:.2s}
-.proj-card:nth-child(6){animation-delay:.25s}
-.hero-txt>*{animation:riseIn .35s cubic-bezier(.23,1,.32,1) both}
-.hero-txt>:nth-child(2){animation-delay:.06s}
-.hero-txt>:nth-child(3){animation-delay:.12s}
-.hero-txt>:nth-child(4){animation-delay:.18s}
-.hero-txt>:nth-child(5){animation-delay:.24s}
-.avatar{animation:fadeIn .5s ease both}
-@media (prefers-reduced-motion: reduce){
-  section,.proj-card,.hero-txt>*{animation:fadeIn .25s ease both}
-  .proj-card{animation-delay:0s!important}
-  .btn:active{transform:none}
-}
-
 /* 最近更新 */
-.updates-box{display:flex;flex-direction:column;gap:10px}
-.upd{background:#fff;border:1px solid var(--line);border-radius:12px;padding:13px 16px}
-.upd b{font-size:14.5px}
-.upd p{font-size:12.5px;color:var(--muted);margin-top:3px}
-.upd-tag{float:right;font-size:10.5px;font-weight:800;color:var(--v-dark);background:var(--v-soft);border-radius:6px;padding:2px 8px;font-family:Consolas,monospace}
+.updates-box{display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.upd{position:relative;border-bottom:1px solid var(--line);padding:15px 0;transition:background .2s ease}
+.upd:hover{background:rgba(255,255,255,.6)}
+.upd b{font-size:14.5px;font-weight:700}
+.upd p{font-size:13px;color:var(--muted);margin-top:3px;padding-right:120px}
+.upd-tag{position:absolute;right:0;top:16px;font-size:11.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+@media (max-width:560px){
+  .nav-links a:nth-child(2),.nav-links a:nth-child(4){display:none}
+  .nav-links{gap:16px}
+}
+@media (max-width:520px){.upd p{padding-right:0}.upd-tag{position:static;display:block;margin-top:2px}}
+
+/* 页脚 */
+footer{border-top:1px solid var(--line);margin-top:26px;padding:28px 0 44px;background:linear-gradient(180deg,transparent,rgba(31,58,95,.025))}
+.f-inner{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--muted)}
+.f-inner a{color:var(--v)}
+:focus-visible{outline:2px solid var(--v);outline-offset:2px;border-radius:3px}
+
+/* ---- 动效：入场 + 滚动渐显 + 触感 ---- */
+@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.hero-txt>*{animation:rise .55s var(--ease) both}
+.hero-txt>:nth-child(2){animation-delay:.06s}
+.hero-txt>:nth-child(3){animation-delay:.13s}
+.hero-txt>:nth-child(4){animation-delay:.2s}
+.avatar{animation:rise .7s var(--ease) .12s both}
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion: reduce){
+  .hero-txt>*,.avatar{animation:none}
+  .reveal{opacity:1;transform:none;transition:none}
+  .btn,.proj-card,.skill,.avatar{transition:none}
+  .btn:hover,.btn:active,.proj-card:hover,.proj-card:active,.skill:hover,.avatar:hover{transform:none}
+}
 </style>
 </head>
 <body>
@@ -123,6 +165,7 @@ section,.proj-card{animation:riseIn .3s cubic-bezier(.23,1,.32,1) both}
     <span class="logo">周何<b>.dev</b></span>
     <div class="nav-links">
       <a href="#projects">项目</a>
+      <a href="#updates">更新</a>
       <a href="#skills">技能</a>
       <a href="#about">关于</a>
       <a href="https://github.com/zhouhe1234" target="_blank" rel="noopener">GitHub</a>
@@ -134,24 +177,26 @@ section,.proj-card{animation:riseIn .3s cubic-bezier(.23,1,.32,1) both}
 
   <header class="hero">
     <div class="hero-txt">
-      <p class="hello">&gt; 你好，世界_</p>
+      <p class="hello">武汉设计工程学院 · 网络与新媒体 · 大二</p>
       <h1>我是周何，<br>把课堂学的<span class="hl">做成能用的</span>。</h1>
-      <p class="tagline">网络与新媒体专业在读 · 内容创作者 · AI 重度玩家。这里是我亲手写的每一个小产品。</p>
+      <p class="tagline">六个自己写的静态站点，零依赖，数据只存在浏览器里。这里放的是做出来的东西，不是学过的清单。</p>
       <div class="hero-cta">
         <a class="btn btn-primary" href="#projects">看我做了什么</a>
         <a class="btn btn-ghost" href="resume/index.html">简历生成器 →</a>
       </div>
     </div>
-    <svg class="avatar" viewBox="0 0 150 150" xmlns="http://www.w3.org/2000/svg" aria-label="头像">
+    <svg class="avatar" viewBox="0 0 132 132" xmlns="http://www.w3.org/2000/svg" aria-label="头像">
       <defs>
-        <linearGradient id="av" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7c3aed"/><stop offset="1" stop-color="#d946ef"/></linearGradient>
+        <linearGradient id="avbg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#24466d"/><stop offset="1" stop-color="#16304f"/>
+        </linearGradient>
       </defs>
-      <rect width="150" height="150" rx="36" fill="url(#av)"/>
-      <path d="M118 26 l3.5 8.5 8.5 3.5 -8.5 3.5 -3.5 8.5 -3.5 -8.5 -8.5 -3.5 8.5 -3.5 Z" fill="#fde68a" opacity=".9"/>
-      <circle cx="30" cy="118" r="4" fill="#ffffff" opacity=".5"/>
-      <path d="M46 34 c 10 -18, 30 -18, 40 0" stroke="#ffffff" stroke-width="2.5" fill="none" stroke-linecap="round" opacity=".45"/>
-      <circle cx="75" cy="58" r="24" fill="#ffffff" opacity=".92"/>
-      <path d="M32 132 c 8 -30, 78 -30, 86 0 l 0 18 -86 0 Z" fill="#ffffff" opacity=".92"/>
+      <rect width="132" height="132" fill="url(#avbg)"/>
+      <circle cx="104" cy="26" r="22" fill="#b3452f" opacity=".18"/>
+      <path d="M104 24 l2.6 6.4 6.4 2.6 -6.4 2.6 -2.6 6.4 -2.6 -6.4 -6.4 -2.6 6.4 -2.6 Z" fill="#efe7d8" opacity=".9"/>
+      <circle cx="66" cy="52" r="19" fill="#f4f0e9" opacity=".96"/>
+      <path d="M32 118 c 6 -26, 62 -26, 68 0 l 0 14 -68 0 Z" fill="#f4f0e9" opacity=".96"/>
+      <circle cx="26" cy="106" r="3" fill="#f4f0e9" opacity=".45"/>
     </svg>
   </header>
 
@@ -160,42 +205,42 @@ section,.proj-card{animation:riseIn .3s cubic-bezier(.23,1,.32,1) both}
     <div class="proj">
       <a class="proj-card" href="https://zhouhe1234.github.io/newmedia-academy/" target="_blank" rel="noopener">
         <span class="proj-status st-live">已上线</span>
-        <div class="proj-ico" style="background:#f3efff">🎓</div>
+        <span class="proj-idx">01</span>
         <b>新媒学园</b>
         <p>网络与新媒体专业学习站：四年路线图、11 门课业速通（112 概念）、9 个训练模块、AI 批改教练、速记闪卡。我的专业，我自己做教材。</p>
         <span class="proj-link">访问站点 →</span>
       </a>
       <a class="proj-card" href="ai-toolkit/index.html">
         <span class="proj-status st-dev">本站</span>
-        <div class="proj-ico" style="background:#fff7ed">🤖</div>
+        <span class="proj-idx">02</span>
         <b>大学生 AI 工具箱</b>
         <p>22 个精选 AI 工具分五类收录（写作 / 图像 / 视频 / 学习 / 办公），每个带使用场景、免费度和可直接复制的提示词示例。</p>
         <span class="proj-link">打开 →</span>
       </a>
       <a class="proj-card" href="tools/index.html">
         <span class="proj-status st-dev">本站</span>
-        <div class="proj-ico" style="background:#eafaf2">🧰</div>
+        <span class="proj-idx">03</span>
         <b>新媒体小工具合集</b>
         <p>字数统计、二维码生成、配色摇号、文本清理、随机选题——新媒体人每天顺手要用的小工具，都在这。</p>
         <span class="proj-link">打开 →</span>
       </a>
       <a class="proj-card" href="resume/index.html">
         <span class="proj-status st-dev">本站</span>
-        <div class="proj-ico" style="background:#fdf0f7">📄</div>
+        <span class="proj-idx">04</span>
         <b>简历生成器</b>
         <p>表单填写、实时预览、一键打印成 A4 简历。数据存本机，随时导出备份。</p>
         <span class="proj-link">打开 →</span>
       </a>
       <a class="proj-card" href="https://zhouhe1234.github.io/cet4-sprint/" target="_blank" rel="noopener">
         <span class="proj-status st-live">已上线</span>
-        <div class="proj-ico" style="background:#eef4ff">📗</div>
+        <span class="proj-idx">05</span>
         <b>四级冲关计划</b>
         <p>234 个高频词 + 间隔重复 + 每日一练 + 错题本，我的第一个网站，12 月四级见。</p>
         <span class="proj-link">访问站点 →</span>
       </a>
       <a class="proj-card" href="https://github.com/zhouhe1234" target="_blank" rel="noopener">
         <span class="proj-status st-live">开源</span>
-        <div class="proj-ico" style="background:#f5f3ff">💻</div>
+        <span class="proj-idx">06</span>
         <b>GitHub @zhouhe1234</b>
         <p>以上全部项目的源码都在这。零依赖、纯前端、数据存本机——欢迎随便看随便用。</p>
         <span class="proj-link">去逛逛 →</span>
@@ -204,32 +249,32 @@ section,.proj-card{animation:riseIn .3s cubic-bezier(.23,1,.32,1) both}
   </section>
 
   <section id="updates">
-    <div class="sec-head"><span class="sec-num">✦</span><h2>最近更新</h2><span class="rule"></span></div>
+    <div class="sec-head"><span class="sec-num">02</span><h2>最近更新</h2><span class="rule"></span></div>
     <div class="updates-box">
-      <div class="upd"><b>🎓 新媒学园</b><span class="upd-tag" id="v-academy">读取中…</span><p>12 门课业速通 · 9 个训练模块 · AI 批改教练 · 速记闪卡</p></div>
-      <div class="upd"><b>📗 四级冲关</b><span class="upd-tag" id="v-cet4">读取中…</span><p>423 个高频词 · 79 题 · 谚语库 · 词组库 60 组</p></div>
-      <div class="upd"><b>🤖 AI 工具箱</b><span class="upd-tag">22 个工具 · 5 类 · 提示词可复制</span><p>新增转写 / 笔记 AI / 写作校对 / 提案 / 验算类工具</p></div>
-      <div class="upd"><b>🧰 小工具 + 📄 简历</b><span class="upd-tag">可用</span><p>字数统计 / 二维码 / 配色摇号 / 简历打印</p></div>
+      <div class="upd"><b>新媒学园</b><span class="upd-tag" id="v-academy">读取中…</span><p>12 门课业速通 · 9 个训练模块 · AI 批改教练 · 速记闪卡</p></div>
+      <div class="upd"><b>四级冲关</b><span class="upd-tag" id="v-cet4">读取中…</span><p>423 个高频词 · 79 题 · 谚语库 · 词组库 60 组</p></div>
+      <div class="upd"><b>AI 工具箱</b><span class="upd-tag">22 个工具 · 5 类</span><p>新增转写 / 笔记 AI / 写作校对 / 提案 / 验算类工具</p></div>
+      <div class="upd"><b>小工具 · 简历</b><span class="upd-tag">可用</span><p>字数统计 / 二维码 / 配色摇号 / 简历打印</p></div>
     </div>
   </section>
 
   <section id="skills">
-    <div class="sec-head"><span class="sec-num">02</span><h2>我在练的技能</h2><span class="rule"></span></div>
+    <div class="sec-head"><span class="sec-num">03</span><h2>我在练的技能</h2><span class="rule"></span></div>
     <div class="skills">
-      <span class="skill"><i class="dot" style="background:#7c3aed"></i>HTML / CSS / 原生 JS</span>
-      <span class="skill"><i class="dot" style="background:#0ea5e9"></i>AI 提示词工程</span>
-      <span class="skill"><i class="dot" style="background:#f59e0b"></i>文案与标题写作</span>
-      <span class="skill"><i class="dot" style="background:#10b981"></i>新媒体运营思维</span>
-      <span class="skill"><i class="dot" style="background:#ef4444"></i>剪映 / 视频剪辑</span>
-      <span class="skill"><i class="dot" style="background:#ec4899"></i>PS / AI 平面基础</span>
-      <span class="skill"><i class="dot" style="background:#6366f1"></i>Git / GitHub 部署</span>
+      <span class="skill">HTML / CSS / 原生 JS</span>
+      <span class="skill">AI 提示词工程</span>
+      <span class="skill">文案与标题写作</span>
+      <span class="skill">新媒体运营思维</span>
+      <span class="skill">剪映 / 视频剪辑</span>
+      <span class="skill">PS / AI 平面基础</span>
+      <span class="skill">Git / GitHub 部署</span>
     </div>
   </section>
 
   <section id="about">
-    <div class="sec-head"><span class="sec-num">03</span><h2>关于我</h2><span class="rule"></span></div>
-    <p class="about-p">武汉设计工程学院网络与新媒体专业，大二在读。大一学完传播学、新闻学、摄影和平面设计，大二开始把专业「翻译」成真正能用的东西：一个学习站、一个备考工具、一套 AI 工作流。</p>
-    <p class="about-p">我相信这个专业最重要的能力是<span class="muted"><b>「把内容做成产品」</b></span>——所以我不用 PPT 展示学过什么，直接把做出来的东西摆在这里。这个页面、以及它链接的每一个站点，代码全由我（和 AI 搭档）手写，零模板、零依赖。</p>
+    <div class="sec-head"><span class="sec-num">04</span><h2>关于我</h2><span class="rule"></span></div>
+    <p class="about-p">武汉设计工程学院网络与新媒体专业，大二在读。大一学完传播学、新闻学、摄影和平面设计，大二开始把专业变成能用的东西：一个学习站、一个备考工具、一套 AI 工作流。</p>
+    <p class="about-p">我相信这个专业最重要的是<span class="muted"><b>把内容做成产品</b></span>——所以这里不放 PPT，只放做出来的东西。页面和它链接的每个站点，代码都是我（和 AI 搭档）手写的，零模板、零依赖。</p>
     <p class="about-p muted" style="font-size:13.5px">找我要简历？上面的简历生成器就是为这一刻准备的。</p>
   </section>
 
@@ -237,14 +282,31 @@ section,.proj-card{animation:riseIn .3s cubic-bezier(.23,1,.32,1) both}
 
 <footer>
   <div class="wrap f-inner">
-    <span>© 2026 周何 · 网络与新媒体</span>
-    <span>本站与子站点全部数据仅存于浏览器本机</span>
+    <span>© 2026 周何 · 网络与新媒体 · 最后更新 2026-11</span>
+    <span>所有数据仅存于浏览器本机</span>
     <a href="https://github.com/zhouhe1234" target="_blank" rel="noopener">github.com/zhouhe1234</a>
   </div>
 </footer>
 
-<script>if("serviceWorker" in navigator && location.protocol.indexOf("http")===0){navigator.serviceWorker.register((location.pathname.indexOf("/")>0?"/":"./")+"sw.js").catch(function(){});}</script><script>
+<script>if("serviceWorker" in navigator && location.protocol.indexOf("http")===0){navigator.serviceWorker.register((location.pathname.indexOf("/")>0?"/":"./")+"sw.js").catch(function(){});}</script>
+<script>
 (function(){
+  /* 滚动渐显：只有支持 IntersectionObserver 才隐藏再显示，避免没 JS 时内容不可见 */
+  if ("IntersectionObserver" in window && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    var els = document.querySelectorAll("section, .proj-card, .upd, .skill");
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); } });
+    }, { rootMargin: "0px 0px -6% 0px", threshold: 0.06 });
+    els.forEach(function(el){ el.classList.add("reveal"); io.observe(el); });
+  }
+  /* 顶栏：滚过首屏后加一道细阴影 */
+  var nav = document.querySelector("nav");
+  var onScroll = function(){
+    if (window.scrollY > 400) nav.style.boxShadow = "0 1px 0 rgba(31,58,95,.06), 0 8px 24px -22px rgba(31,58,95,.6)";
+    else nav.style.boxShadow = "none";
+  };
+  addEventListener("scroll", onScroll, { passive: true }); onScroll();
+
   async function grab(url, id){
     try{
       const t = await (await fetch(url)).text();
