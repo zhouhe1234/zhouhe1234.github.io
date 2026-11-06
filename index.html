@@ -68,6 +68,17 @@ h1 .hl::after{content:"";position:absolute;left:0;right:0;bottom:2px;height:7px;
 .avatar{width:132px;height:132px;flex-shrink:0;border-radius:10px;border:1px solid var(--line);display:block;
   box-shadow:0 18px 36px -24px rgba(31,58,95,.55);transition:transform .3s var(--ease),box-shadow .3s ease}
 .avatar:hover{transform:translateY(-2px) rotate(-1deg);box-shadow:0 24px 44px -22px rgba(31,58,95,.5)}
+
+/* 首屏数字条 */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin:4px 0 8px}
+.stat{background:var(--bg);padding:16px 18px}
+.stat b{display:block;font-family:var(--serif);font-size:23px;line-height:1.2;font-variant-numeric:tabular-nums}
+.stat span{display:block;font-size:12.5px;color:var(--muted);margin-top:5px}
+@media (max-width:640px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .stat{padding:13px 14px}
+  .stat b{font-size:19px}
+}
 @media (max-width:640px){
   .hero{flex-direction:column-reverse;align-items:flex-start;padding:50px 0 40px;gap:24px}
   h1{font-size:31px}
@@ -122,6 +133,14 @@ section{padding:44px 0}
 .about-p{font-size:15.5px;line-height:1.95;color:var(--ink);margin-bottom:14px;max-width:660px}
 .about-p .muted{color:var(--muted)}
 
+/* 课程作业 */
+.course-list{border-top:1px solid var(--line)}
+.course{position:relative;border-bottom:1px solid var(--line);padding:17px 0}
+.course b{font-size:15.5px;font-weight:700}
+.course .meta{display:block;font-size:12.5px;color:var(--muted);margin-top:4px;font-variant-numeric:tabular-nums}
+.course p{font-size:13.5px;color:var(--muted);margin-top:9px;max-width:640px;line-height:1.8}
+.course .note{display:inline-block;margin-top:9px;font-size:12px;color:var(--warm)}
+
 /* 最近更新 */
 .updates-box{display:flex;flex-direction:column;border-top:1px solid var(--line)}
 .upd{position:relative;border-bottom:1px solid var(--line);padding:15px 0;transition:background .2s ease}
@@ -130,7 +149,7 @@ section{padding:44px 0}
 .upd p{font-size:13px;color:var(--muted);margin-top:3px;padding-right:120px}
 .upd-tag{position:absolute;right:0;top:16px;font-size:11.5px;color:var(--muted);font-variant-numeric:tabular-nums}
 @media (max-width:560px){
-  .nav-links a:nth-child(2),.nav-links a:nth-child(4){display:none}
+  .nav-links a:nth-child(4){display:none}
   .nav-links{gap:16px}
 }
 @media (max-width:520px){.upd p{padding-right:0}.upd-tag{position:static;display:block;margin-top:2px}}
@@ -165,7 +184,7 @@ footer{border-top:1px solid var(--line);margin-top:26px;padding:28px 0 44px;back
     <span class="logo">周何<b>.dev</b></span>
     <div class="nav-links">
       <a href="#projects">项目</a>
-      <a href="#updates">更新</a>
+      <a href="#coursework">课程</a>
       <a href="#skills">技能</a>
       <a href="#about">关于</a>
       <a href="https://github.com/zhouhe1234" target="_blank" rel="noopener">GitHub</a>
@@ -199,6 +218,13 @@ footer{border-top:1px solid var(--line);margin-top:26px;padding:28px 0 44px;back
       <circle cx="26" cy="106" r="3" fill="#f4f0e9" opacity=".45"/>
     </svg>
   </header>
+
+  <div class="stats">
+    <div class="stat"><b>6</b><span>个站点（3 个已上线）</span></div>
+    <div class="stat"><b>7,094</b><span>行代码 / 24 个文件</span></div>
+    <div class="stat"><b>0</b><span>框架、0 后端、0 追踪</span></div>
+    <div class="stat"><b>PWA</b><span>可装到手机，离线能用</span></div>
+  </div>
 
   <section id="projects">
     <div class="sec-head"><span class="sec-num">01</span><h2>我做的项目</h2><span class="rule"></span></div>
@@ -248,8 +274,36 @@ footer{border-top:1px solid var(--line);margin-top:26px;padding:28px 0 44px;back
     </div>
   </section>
 
+  <section id="coursework">
+    <div class="sec-head"><span class="sec-num">02</span><h2>课程作业</h2><span class="rule"></span></div>
+    <div class="course-list">
+      <div class="course">
+        <b>市场调研报告</b>
+        <span class="meta">《市场调研》平时作业一 · 2026.10 · 小组 5 人，我任组长</span>
+        <p>35 页正文 / 34 张图 / 7 张表。二手资料 10 组、问卷 23 题、实地观察 12 处；负责调研设计与数据整理，最后统一成稿。</p>
+        <span class="note">原文含组员信息，不公开</span>
+      </div>
+      <div class="course">
+        <b>写生汇报 PPT</b>
+        <span class="meta">《写生》课程汇报 · 2026.09</span>
+        <p>从 177 张原图里按水面反射量选出 9 张主题片，51 张配图统一调色；导出 PPTX / PDF，488 处淡入动效，可离线放映。</p>
+        <span class="note">原文件 91 MB，未托管</span>
+      </div>
+      <div class="course">
+        <b>潇贺古道田野调查</b>
+        <span class="meta">暑期实践 · 2026.09 · 湖南永州道县 → 广西贺州，约 170 公里</span>
+        <p>沿古道走访桥村，整理史料层 / 知识层 / 成品层三编资料库，含桥村文化研究、拍摄笔记与成文。</p>
+      </div>
+      <div class="course">
+        <b>形势与政策 PPT</b>
+        <span class="meta">《形势与政策》课堂汇报 · 2026.10 · 7 页</span>
+        <p>主题「人工智能时代，网络与新媒体专业怎么办」。原生形状可编辑，每页带备注；含 7 张自己生成的示意图。</p>
+      </div>
+    </div>
+  </section>
+
   <section id="updates">
-    <div class="sec-head"><span class="sec-num">02</span><h2>最近更新</h2><span class="rule"></span></div>
+    <div class="sec-head"><span class="sec-num">03</span><h2>最近更新</h2><span class="rule"></span></div>
     <div class="updates-box">
       <div class="upd"><b>新媒学园</b><span class="upd-tag" id="v-academy">读取中…</span><p>12 门课业速通 · 9 个训练模块 · AI 批改教练 · 速记闪卡</p></div>
       <div class="upd"><b>四级冲关</b><span class="upd-tag" id="v-cet4">读取中…</span><p>423 个高频词 · 79 题 · 谚语库 · 词组库 60 组</p></div>
@@ -259,7 +313,7 @@ footer{border-top:1px solid var(--line);margin-top:26px;padding:28px 0 44px;back
   </section>
 
   <section id="skills">
-    <div class="sec-head"><span class="sec-num">03</span><h2>我在练的技能</h2><span class="rule"></span></div>
+    <div class="sec-head"><span class="sec-num">04</span><h2>我在练的技能</h2><span class="rule"></span></div>
     <div class="skills">
       <span class="skill">HTML / CSS / 原生 JS</span>
       <span class="skill">AI 提示词工程</span>
@@ -272,9 +326,10 @@ footer{border-top:1px solid var(--line);margin-top:26px;padding:28px 0 44px;back
   </section>
 
   <section id="about">
-    <div class="sec-head"><span class="sec-num">04</span><h2>关于我</h2><span class="rule"></span></div>
+    <div class="sec-head"><span class="sec-num">05</span><h2>关于我</h2><span class="rule"></span></div>
     <p class="about-p">武汉设计工程学院网络与新媒体专业，大二在读。大一学完传播学、新闻学、摄影和平面设计，大二开始把专业变成能用的东西：一个学习站、一个备考工具、一套 AI 工作流。</p>
-    <p class="about-p">我相信这个专业最重要的是<span class="muted"><b>把内容做成产品</b></span>——所以这里不放 PPT，只放做出来的东西。页面和它链接的每个站点，代码都是我（和 AI 搭档）手写的，零模板、零依赖。</p>
+    <p class="about-p">整站都是纯静态的：HTML / CSS / 原生 JS，没有框架、没有构建工具、没有后端，三个站点加起来 7 千多行、零依赖。每个页面都能离线打开（Service Worker 缓存），可以装到手机主屏当 App 用；数据只存在浏览器本机，不上传任何服务器。</p>
+    <p class="about-p">做法上，结构和交互由我定，代码和 AI 助手一起写。每改一版都会在电脑和手机上真机点一遍、截图对比，确认没问题再上线——所以这里的每个链接都是能直接点开用的，不是设计稿。</p>
     <p class="about-p muted" style="font-size:13.5px">找我要简历？上面的简历生成器就是为这一刻准备的。</p>
   </section>
 
