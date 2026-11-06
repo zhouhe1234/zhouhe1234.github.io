@@ -25,9 +25,9 @@
 html{scroll-behavior:smooth;overflow-x:hidden}
 body{font-family:var(--sans);color:var(--ink);line-height:1.75;-webkit-font-smoothing:antialiased;font-size:16px;overflow-x:hidden;
   background:
-    radial-gradient(900px 520px at 12% -6%, rgba(31,58,95,.085), transparent 72%),
-    radial-gradient(820px 460px at 88% -4%, rgba(179,69,47,.075), transparent 74%),
-    radial-gradient(700px 380px at 50% 2%, rgba(166,124,46,.05), transparent 76%),
+    radial-gradient(900px 520px at 12% -6%, rgba(31,58,95,.05), transparent 72%),
+    radial-gradient(820px 460px at 88% -4%, rgba(179,69,47,.045), transparent 74%),
+    radial-gradient(700px 380px at 50% 2%, rgba(166,124,46,.03), transparent 76%),
     var(--bg)}
 ::selection{background:rgba(31,58,95,.16)}
 a{color:var(--v-dark);text-decoration:none;text-underline-offset:3px}
@@ -56,9 +56,9 @@ h1 .hl::after{content:"";position:absolute;left:0;right:0;bottom:2px;height:7px;
 .hero-cta{margin-top:26px;display:flex;gap:10px;flex-wrap:wrap}
 .btn{display:inline-block;padding:11px 21px;border-radius:4px;font-size:14.5px;border:1px solid transparent;cursor:pointer;
   transition:transform .18s var(--ease),box-shadow .22s ease,background .18s ease,border-color .18s ease,color .18s ease}
-.btn-primary{background:linear-gradient(180deg,#28496f,#1a3352);color:#fff;
+.btn-primary{background:var(--v);color:#fff;
   box-shadow:inset 0 1px 0 rgba(255,255,255,.16),0 6px 16px -10px rgba(31,58,95,.75)}
-.btn-primary:hover{background:linear-gradient(180deg,#2d517b,#1b3657);text-decoration:none;
+.btn-primary:hover{background:var(--v-dark);text-decoration:none;
   box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 10px 22px -10px rgba(31,58,95,.6);transform:translateY(-1px)}
 .btn-primary:active{transform:translateY(1px) scale(.985);box-shadow:inset 0 1px 0 rgba(0,0,0,.12),0 2px 6px -4px rgba(31,58,95,.7)}
 .btn-ghost{border-color:var(--line);color:var(--ink);background:rgba(255,255,255,.5)}
@@ -69,16 +69,7 @@ h1 .hl::after{content:"";position:absolute;left:0;right:0;bottom:2px;height:7px;
   box-shadow:0 18px 36px -24px rgba(31,58,95,.55);transition:transform .3s var(--ease),box-shadow .3s ease}
 .avatar:hover{transform:translateY(-2px) rotate(-1deg);box-shadow:0 24px 44px -22px rgba(31,58,95,.5)}
 
-/* 首屏数字条 */
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin:4px 0 8px}
-.stat{background:var(--bg);padding:16px 18px}
-.stat b{display:block;font-family:var(--serif);font-size:23px;line-height:1.2;font-variant-numeric:tabular-nums}
-.stat span{display:block;font-size:12.5px;color:var(--muted);margin-top:5px}
-@media (max-width:640px){
-  .stats{grid-template-columns:repeat(2,1fr)}
-  .stat{padding:13px 14px}
-  .stat b{font-size:19px}
-}
+/* 首屏数字条（已删除，保留占位以免旧样式影响其他块） */
 @media (max-width:640px){
   .hero{flex-direction:column-reverse;align-items:flex-start;padding:50px 0 40px;gap:24px}
   h1{font-size:31px}
@@ -89,7 +80,7 @@ h1 .hl::after{content:"";position:absolute;left:0;right:0;bottom:2px;height:7px;
 }
 
 /* ---- 分区 ---- */
-section{padding:44px 0}
+section{padding:44px 0;scroll-margin-top:76px}
 .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:22px}
 .sec-num{font-family:var(--serif);color:var(--warm);font-size:14px}
 .sec-head h2{font-family:var(--serif);font-weight:700;font-size:22px;letter-spacing:.01em}
@@ -101,21 +92,16 @@ section{padding:44px 0}
   transition:transform .2s var(--ease),box-shadow .24s ease,border-color .2s ease}
 .proj-card::before{content:"";position:absolute;inset:0;border-radius:inherit;opacity:0;transition:opacity .25s ease;pointer-events:none;
   background:linear-gradient(150deg,rgba(31,58,95,.055),rgba(255,255,255,0) 58%)}
-.proj-card:hover{transform:translateY(-3px);border-color:#c8d2de;box-shadow:0 16px 32px -24px rgba(31,58,95,.6);text-decoration:none}
+.proj-card:hover{transform:translateY(-2px);border-color:#c8d2de;box-shadow:0 16px 32px -24px rgba(31,58,95,.6);text-decoration:none}
 .proj-card:hover::before{opacity:1}
 .proj-card:active{transform:translateY(-1px) scale(.995)}
 .proj-idx{display:block;font-family:var(--serif);font-size:13px;color:var(--muted);margin-bottom:10px;letter-spacing:.06em;transition:color .2s}
 .proj-card:hover .proj-idx{color:var(--v)}
-.proj-card:nth-child(1) .proj-idx{color:var(--v)}
-.proj-card:nth-child(2) .proj-idx{color:var(--warm)}
-.proj-card:nth-child(3) .proj-idx{color:var(--gold)}
-.proj-card:nth-child(4) .proj-idx{color:var(--green)}
-.proj-card:nth-child(5) .proj-idx{color:var(--plum)}
-.proj-card:nth-child(6) .proj-idx{color:var(--v)}
+.proj-idx{color:var(--muted)}
 .proj-card:nth-child(3n+1):hover{border-color:#c8b7ad}
 .proj-card:nth-child(3n+2):hover{border-color:#b9c6bd}
 .proj-card b{font-size:16px;color:var(--ink);font-weight:700}
-.proj-card p{font-size:13.5px;color:var(--muted);margin-top:6px;line-height:1.75}
+.proj-card p{font-size:13.5px;color:var(--muted);margin-top:6px;line-height:1.75;overflow-wrap:anywhere}
 .proj-link{display:inline-block;margin-top:12px;font-size:13px;color:var(--v);transition:transform .2s var(--ease)}
 .proj-card:hover .proj-link{transform:translateX(3px)}
 .proj-status{float:right;font-size:11px;letter-spacing:.04em;border:1px solid var(--line);border-radius:3px;padding:1px 7px}
@@ -138,7 +124,7 @@ section{padding:44px 0}
 .course{position:relative;border-bottom:1px solid var(--line);padding:17px 0}
 .course b{font-size:15.5px;font-weight:700}
 .course .meta{display:block;font-size:12.5px;color:var(--muted);margin-top:4px;font-variant-numeric:tabular-nums}
-.course p{font-size:13.5px;color:var(--muted);margin-top:9px;max-width:640px;line-height:1.8}
+.course p{font-size:13.5px;color:var(--muted);margin-top:9px;max-width:640px;line-height:1.8;overflow-wrap:anywhere}
 .course .note{display:inline-block;margin-top:9px;font-size:12px;color:var(--warm)}
 
 /* 最近更新 */
@@ -155,7 +141,7 @@ section{padding:44px 0}
 @media (max-width:520px){.upd p{padding-right:0}.upd-tag{position:static;display:block;margin-top:2px}}
 
 /* 页脚 */
-footer{border-top:1px solid var(--line);margin-top:26px;padding:28px 0 44px;background:linear-gradient(180deg,transparent,rgba(31,58,95,.025))}
+footer{border-top:1px solid var(--line);margin-top:26px;padding:28px 0 44px}
 .f-inner{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--muted)}
 .f-inner a{color:var(--v)}
 :focus-visible{outline:2px solid var(--v);outline-offset:2px;border-radius:3px}
@@ -198,7 +184,7 @@ footer{border-top:1px solid var(--line);margin-top:26px;padding:28px 0 44px;back
     <div class="hero-txt">
       <p class="hello">武汉设计工程学院 · 网络与新媒体 · 大二</p>
       <h1>我是周何，<br>把课堂学的<span class="hl">做成能用的</span>。</h1>
-      <p class="tagline">六个自己写的静态站点，零依赖，数据只存在浏览器里。这里放的是做出来的东西，不是学过的清单。</p>
+      <p class="tagline">平时做的一些小网站：学习资料、备考工具、几个顺手能用的小工具。数据都只存在浏览器里。</p>
       <div class="hero-cta">
         <a class="btn btn-primary" href="#projects">看我做了什么</a>
         <a class="btn btn-ghost" href="resume/index.html">简历生成器 →</a>
@@ -218,13 +204,6 @@ footer{border-top:1px solid var(--line);margin-top:26px;padding:28px 0 44px;back
       <circle cx="26" cy="106" r="3" fill="#f4f0e9" opacity=".45"/>
     </svg>
   </header>
-
-  <div class="stats">
-    <div class="stat"><b>6</b><span>个站点（3 个已上线）</span></div>
-    <div class="stat"><b>7,094</b><span>行代码 / 24 个文件</span></div>
-    <div class="stat"><b>0</b><span>框架、0 后端、0 追踪</span></div>
-    <div class="stat"><b>PWA</b><span>可装到手机，离线能用</span></div>
-  </div>
 
   <section id="projects">
     <div class="sec-head"><span class="sec-num">01</span><h2>我做的项目</h2><span class="rule"></span></div>
@@ -327,9 +306,9 @@ footer{border-top:1px solid var(--line);margin-top:26px;padding:28px 0 44px;back
 
   <section id="about">
     <div class="sec-head"><span class="sec-num">05</span><h2>关于我</h2><span class="rule"></span></div>
-    <p class="about-p">武汉设计工程学院网络与新媒体专业，大二在读。大一学完传播学、新闻学、摄影和平面设计，大二开始把专业变成能用的东西：一个学习站、一个备考工具、一套 AI 工作流。</p>
-    <p class="about-p">整站都是纯静态的：HTML / CSS / 原生 JS，没有框架、没有构建工具、没有后端，三个站点加起来 7 千多行、零依赖。每个页面都能离线打开（Service Worker 缓存），可以装到手机主屏当 App 用；数据只存在浏览器本机，不上传任何服务器。</p>
-    <p class="about-p">做法上，结构和交互由我定，代码和 AI 助手一起写。每改一版都会在电脑和手机上真机点一遍、截图对比，确认没问题再上线——所以这里的每个链接都是能直接点开用的，不是设计稿。</p>
+    <p class="about-p">武汉设计工程学院网络与新媒体专业，大二在读。大一学了传播学、新闻学、摄影和平面设计，现在想把课上学的慢慢做成能用的东西。</p>
+    <p class="about-p">整站是纯静态的：HTML、CSS、原生 JS，没有框架也没有后端；页面能离线打开，数据只存在浏览器本机，不上传服务器。</p>
+    <p class="about-p">代码和 AI 一起写，改完在电脑和手机上试一遍，能用再放上来。</p>
     <p class="about-p muted" style="font-size:13.5px">找我要简历？上面的简历生成器就是为这一刻准备的。</p>
   </section>
 
